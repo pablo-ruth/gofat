@@ -72,6 +72,7 @@ func Profile() ([]Dependency, error) {
 		if len(splitImport) <= 1 {
 			continue
 		}
+		depPath := splitImport[0]
 
 		stat, err := os.Stat(splitImport[1])
 		if err != nil {
@@ -79,7 +80,12 @@ func Profile() ([]Dependency, error) {
 			continue
 		}
 
-		dependencies = append(dependencies, Dependency{Size: uint64(stat.Size()), Name: splitImport[0], cache: splitImport[1]})
+		index := strings.Index(depPath, "/vendor/")
+		if index >= 0 {
+			depPath = depPath[index+8:]
+		}
+
+		dependencies = append(dependencies, Dependency{Size: uint64(stat.Size()), Name: depPath, cache: splitImport[1]})
 	}
 
 	slice.Sort(dependencies[:], func(i, j int) bool {
