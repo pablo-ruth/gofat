@@ -22,7 +22,7 @@ type Dependency struct {
 func Profile() ([]Dependency, error) {
 	fmt.Println("Compiling...")
 
-	cmd := exec.Command("go", "build", "-work", "-a")
+	cmd := exec.Command("go", "build", "-o", "tmp-build-output", "-work", "-a")
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return []Dependency{}, err
@@ -34,7 +34,13 @@ func Profile() ([]Dependency, error) {
 		return []Dependency{}, err
 	}
 	defer func() {
-		fmt.Printf("Removing temp folder %s\n", tmpDir)
+		fmt.Println("Removing temp folder and temp binary")
+
+		err = os.Remove("tmp-build-output")
+		if err != nil {
+			fmt.Printf("Failed to remove temp binary ./tmp-build-output")
+		}
+
 		err = os.RemoveAll(tmpDir)
 		if err != nil {
 			fmt.Printf("Failed to remove temp folder %s\n", tmpDir)
