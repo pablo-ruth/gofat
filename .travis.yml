@@ -1,0 +1,16 @@
+language: go
+go:
+- '1.10'
+go_import_path: github.com/pablo-ruth/gofat
+script:
+- make dep
+- make build VERSION=${TRAVIS_TAG}
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: BbBzPGw9GdWRQNLlteT6qcnF/LWp93gv2cbNFGuKx4OW4S4SMfG3lZ5al/9IpJOlh7M9j+0gWlx++qf6SfTM2r2FpRC+sW7HY6m6cFDIU4GD4OQrngsSMlFgIvWzEPFCq0ETW0kl3ppiWvLqUx0l6uYE2AQ+ozbXZbYcax/GqHeD1Uo/ttv9219eedUOvJ7j8yDXPNxZ8tsZHC/WHDv6WiLiszDV8O6I2IhEN2S+cf7G4hohucjbQ7RsgU0DIHKy6ohixK7gUqRgHlGCRFlL04CrE8Zr9X8ty5Y5ysnZTbSNh2sI0vz5r9I5nKSSDSCSsehFJ1f/IN2Sq02ln2FSXAMraGf2IzNZ7mHxcVMDZojFo4Zpt5YjCDm2e5JX1EF4nD5rk+sSqdCJi7mCcPaljAJMrtuYcfXwZ2t0Bl+Rfc3is3JuByf8UEHphe/vmizpRYU402AFf9Tl/H5Wyt09wxKn4cDxA1cs5E+QmPGakpAUzHQ9/r4sPa8Ktw11Yi8ivtIKi2JAhOjAVhCb/zxiXDjx7YAclnws6Uwbl6+dxX80uWVQcovffNCmohiS7mKoHcvFWK7j7aCMYIqgqdL17tdM6AjP+4GLrv+HW54VljOiloKs4efGLnWSXiqfy8yCIPvyrYwFBDnnKszT2eLfvULWucYX+oBVm+15G00VmGo=
+  file: gofat
+  on:
+    repo: pablo-ruth/gofat
+    tags: true
